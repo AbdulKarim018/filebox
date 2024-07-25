@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Files - Filebox</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="navbar bg-base-100">
+      <div class="container max-w-4xl mx-auto">
+        <div class="flex-1">
+          <a class="btn btn-ghost text-2xl font-extrabold">Filebox</a>
+          <!-- <a class="btn btn-ghost">My Files</a> -->
+        </div>
+        <div class="flex-none">
+          <div class="dropdown dropdown-end">
+            <div
+              tabindex="0"
+              role="button"
+              class="btn btn-ghost btn-circle avatar"
+            >
+              <div class="w-10 rounded-full">
+                <img
+                  alt="user image"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  id="user_img"
+                />
+              </div>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <!-- <a class="justify-between">
+                Profile
+                <span class="badge">New</span>
+              </a> -->
+              </li>
+              <!-- <li><a>Settings</a></li> -->
+              <li>
+                <button class="text-red-400" id="logout_btn">Logout</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main class="container mx-auto max-w-4xl">
+      <h2 class="text-2xl font-bold my-6">Upload a file</h2>
+
+      <div class="flex items-center justify-center gap-6 my-10">
+        <input
+          id="file_input"
+          type="file"
+          multiple
+          class="file-input file-input-bordered w-full max-w-xs"
+        />
+        <!-- <button class="btn btn-primary">Upload</button> -->
+      </div>
+
+      <h2 class="text-2xl font-bold my-6">My Files</h2>
+
+      <div class="overflow-x-auto h-screen">
+        <table class="table">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Actions</th>
+              <th>isPublic</th>
+            </tr>
+          </thead>
+          <tbody id="files_table_body"></tbody>
+        </table>
+      </div>
+    </main>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
