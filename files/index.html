@@ -74,6 +74,13 @@
         <!-- <button class="btn btn-primary">Upload</button> -->
       </div>
 
+      <div
+        id="upload-loader"
+        class="flex gap-2 items-center justify-center hidden"
+      >
+        <span class="loading loading-sm"></span> Uploading...
+      </div>
+
       <h2 class="text-2xl font-bold my-6">My Files</h2>
 
       <div class="overflow-x-auto h-screen">
@@ -81,7 +88,7 @@
           <!-- head -->
           <thead>
             <tr>
-              <th></th>
+              <th>Preview</th>
               <th>Name</th>
               <th>Size</th>
               <th>Actions</th>

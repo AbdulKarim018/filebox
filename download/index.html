@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download File - Filebox</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <a
+      class="text-3xl flex justify-center font-extrabold my-10"
+      href="/index.html"
+      >Filebox</a
+    >
+
+    <main
+      class="container max-w-4xl mx-auto flex flex-col items-center justify-center"
+    >
+      <span class="loading loading-lg text-center" id="loader"></span>
+      <div
+        id="not-found"
+        class="flex flex-col items-center justify-center hidden"
+      >
+        <h2 class="text-center text-2xl font-bold">
+          Sorry, The requested file was not found on the server :(
+        </h2>
+      </div>
+      <div
+        id="not-public"
+        class="flex flex-col items-center justify-center hidden"
+      >
+        <h2 class="text-center text-2xl font-bold">
+          Sorry, The requested file is not public :(
+        </h2>
+        <p>You can only download public files</p>
+        <p>ask the owner to make the file public</p>
+      </div>
+
+      <div id="file-found" class="hidden"></div>
+      <div id="thank-you" class="hidden">
+        <div class="flex flex-col items-center justify-center">
+          <h2 class="text-center text-2xl font-bold">
+            Thank you for using Filebox :)
+          </h2>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

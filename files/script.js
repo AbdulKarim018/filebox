@@ -12,6 +12,7 @@ import {
   ref,
   signOut,
   storage,
+  updateDoc,
   uploadBytes,
   where,
 } from "../firebase.js";
@@ -20,6 +21,7 @@ const logout_btn = document.getElementById("logout_btn");
 const user_img = document.getElementById("user_img");
 const file_input = document.getElementById("file_input");
 const files_table_body = document.getElementById("files_table_body");
+const upload_loader = document.getElementById("upload-loader");
 
 let globle_user = null;
 
@@ -48,6 +50,7 @@ file_input.addEventListener("change", async (e) => {
   console.log(files);
   if (files.length === 0) return;
 
+  upload_loader.classList.remove("hidden");
   const response = await Promise.all(
     files.map(async (file) => {
       const storageRef = ref(
@@ -79,6 +82,7 @@ file_input.addEventListener("change", async (e) => {
       userId: globle_user.uid,
     });
   }
+  upload_loader.classList.add("hidden");
 });
 
 async function getFiles() {
@@ -108,7 +112,7 @@ async function getFiles() {
        <tr class="hover">
               <th></th>
               <td>${file.name.split("__")[0]}</td>
-              <td>${file.size} bytes</td>
+              <td>${(file.size / 1024).toFixed(2)} KB</td>
               <td>
                 <div class="dropdown">
                   <div tabindex="0" role="button" class="btn btn-sm">...</div>
@@ -117,7 +121,9 @@ async function getFiles() {
                     class="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow"
                   >
                     <li><a href="${file.url}" target="_blank" >Download</a></li>
-                    <li><button class="btn btn-ghost" disabled>Copy Sharable Link</button></li>
+                    <li><button class="public-url-copy-btn" data-file-id="${
+                      file.id
+                    }" >Copy Sharable Link</button></li>
                     <li><button class="text-red-400 delete-btn" data-file-fullpath="${
                       file.fullPath
                     }" data-file-id="${file.id}">Delete</button></li>
@@ -125,9 +131,11 @@ async function getFiles() {
                 </div>
               </td>
               <td>
-                <input disabled type="checkbox" class="toggle" ${
-                  file.isPublic ? "checked" : ""
-                } />
+                <input data-file-id="${
+                  file.id
+                }" type="checkbox" class="toggle isPublic-toggle" ${
+        file.isPublic ? "checked" : ""
+      } />
               </td>
             </tr>
       
@@ -136,6 +144,10 @@ async function getFiles() {
       `;
     }
     const delete_btns = document.querySelectorAll(".delete-btn");
+    const isPublic_toggles = document.querySelectorAll(".isPublic-toggle");
+    const public_url_copy_btns = document.querySelectorAll(
+      ".public-url-copy-btn"
+    );
 
     delete_btns.forEach((btn) => {
       btn.addEventListener("click", async (e) => {
@@ -145,6 +157,28 @@ async function getFiles() {
 
         await deleteDoc(doc(db, "fb_files", fileId));
         console.log("File deleted");
+      });
+    });
+
+    isPublic_toggles.forEach((toggle) => {
+      toggle.addEventListener("change", async (e) => {
+        const fileId = e.target.dataset.fileId;
+        const isPublic = e.target.checked;
+        // console.log(fileId, isPublic);
+        await updateDoc(doc(db, "fb_files", fileId), {
+          isPublic: isPublic,
+        });
+        // console.log("File isPublic updated");
+      });
+    });
+
+    public_url_copy_btns.forEach((btn) => {
+      btn.addEventListener("click", async (e) => {
+        const fileId = e.target.dataset.fileId;
+        const url = `${location.origin}/download/index.html?fileId=${fileId}`;
+        console.log(url);
+        navigator.clipboard.writeText(url);
+        alert("Sharable link copied to clipboard");
       });
     });
   });
