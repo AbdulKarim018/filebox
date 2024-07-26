@@ -86,6 +86,11 @@ file_input.addEventListener("change", async (e) => {
 });
 
 async function getFiles() {
+  files_table_body.innerHTML = `
+      <tr class="hover">
+        <th><div class="flex items-center justify-center"><span class="loading loading-lg"></span></div></th>
+      </tr>
+      `;
   const q = query(
     collection(db, "fb_files"),
     where("userId", "==", globle_user.uid)
