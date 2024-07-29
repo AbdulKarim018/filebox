@@ -17,7 +17,7 @@ import {
   where,
 } from "../firebase.js";
 
-const imgExtensions = [".jpg", ".png", "jpeg", "webp"];
+const imgExtensions = ["jpg", "png", "jpeg", "webp"];
 
 const logout_btn = document.getElementById("logout_btn");
 const user_img = document.getElementById("user_img");
@@ -113,14 +113,14 @@ async function getFiles() {
     }
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      const img_ext = file.name.split("__")[0].split(".").pop().toLowerCase();
+      console.log(img_ext);
 
       files_table_body.innerHTML += `
       
        <tr class="hover">
               <th><img  class="size-10"  src="${
-                file.name.split("__")[0].split(".").pop().toLowerCase()
-                  ? file.url
-                  : "/assets/file-icon.png"
+                imgExtensions.includes(img_ext) ? file.url : "/assets/file-icon.png"
               }"  /></th>
               <td>${file.name.split("__")[0]}</td>
               <td>${(file.size / 1024).toFixed(2)} KB</td>

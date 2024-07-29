@@ -1,12 +1,6 @@
-import {
-  collection,
-  db,
-  doc,
-  getDoc,
-  onSnapshot,
-  query,
-  where,
-} from "../firebase.js";
+import { collection, db, doc, onSnapshot, query, where } from "../firebase.js";
+
+const imgExtensions = ["jpg", "png", "jpeg", "webp"];
 
 const params = new URLSearchParams(window.location.search);
 const fileId = params.get("fileId");
@@ -30,6 +24,7 @@ const unsub = onSnapshot(doc(db, "fb_files", fileId), (d) => {
   console.log(doc);
   if (doc.fullPath) {
     if (doc.isPublic) {
+      const img_ext = doc.name.split("__")[0].split(".").pop().toLowerCase();
       loader.classList.add("hidden");
       fileFound.classList.remove("hidden");
       notFound.classList.add("hidden");
@@ -41,11 +36,11 @@ const unsub = onSnapshot(doc(db, "fb_files", fileId), (d) => {
     <div class="flex flex-col items-center justify-center">
           <div class="card bg-base-100 w-96 shadow-xl">
             <figure class="px-10 pt-10">
-              <img
-                src="/assets/file-icon.png"
-                alt="file icon"
-                class="rounded-xl size-16"
-              />
+            <img class="rounded-xl size-16" lt="file icon"  src="${
+              imgExtensions.includes(img_ext)
+                ? doc.url
+                : "/assets/file-icon.png"
+            }"  />
             </figure>
             <div class="card-body items-center text-center">
               <h2 class="card-title">${doc.name.split("__")[0]}</h2>
