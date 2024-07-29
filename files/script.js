@@ -17,6 +17,8 @@ import {
   where,
 } from "../firebase.js";
 
+const imgExtensions = [".jpg", ".png", "jpeg", "webp"];
+
 const logout_btn = document.getElementById("logout_btn");
 const user_img = document.getElementById("user_img");
 const file_input = document.getElementById("file_input");
@@ -115,7 +117,11 @@ async function getFiles() {
       files_table_body.innerHTML += `
       
        <tr class="hover">
-              <th></th>
+              <th><img  class="size-10"  src="${
+                file.name.split("__")[0].split(".").pop().toLowerCase()
+                  ? file.url
+                  : "/assets/file-icon.png"
+              }"  /></th>
               <td>${file.name.split("__")[0]}</td>
               <td>${(file.size / 1024).toFixed(2)} KB</td>
               <td>

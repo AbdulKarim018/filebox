@@ -108,33 +108,3 @@ const unsub = onSnapshot(doc(db, "fb_files", fileId), (d) => {
     console.log("No file found");
   }
 });
-
-{
-  /* <script>
-document
-  .getElementById("download-btn")
-  .addEventListener("click", function () {
-    const fileUrl =
-      "https://firebasestorage.googleapis.com/v0/b/smit-firebase-e6ef5.appspot.com/o/fb_files%2Fdownload.png__3e9d137c-0870-4486-a9ae-7904cbf7f2c7?alt=media&token=a8930458-e378-423b-8e4a-f22d3649d52d";
-    fetch(fileUrl)
-      .then((response) => {
-        alert("Downloading the file...");
-        return response.blob();
-      })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = "download.png";
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        alert("File downloaded successfully!");
-      })
-      .catch(() =>
-        alert("An error occurred while downloading the file.")
-      );
-  });
-</script> */
-}
